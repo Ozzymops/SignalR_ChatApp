@@ -28,11 +28,5 @@ namespace SignalR_ChatApp.Hubs
             // Toon een bericht dat iemand de room heeft verlaten.
             await Clients.All.SendAsync("LeaveMessage", user, room);
         }
-
-        // csChat.js
-        public async Task SendMessageCs(User user, Message msg, Room room)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", user.Name, msg.Msg, room.Number);
-        }
     }
 }
