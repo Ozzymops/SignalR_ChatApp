@@ -1,0 +1,19 @@
+﻿@model IEnumerable<SignalR_ChatApp.Models.User>
+
+<h1>Users</h1>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>MsgCount</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Name</td>
+            <td>@user.MsgCount</td>
+        </tr>
+    }
+</table>
