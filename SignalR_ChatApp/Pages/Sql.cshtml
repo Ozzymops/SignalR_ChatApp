@@ -7,8 +7,19 @@
     <title>Sql</title>
 </head>
 <body>
-    <h1>Top test!</h1>
-    @await Component.InvokeAsync("UserComponent")
-    <h1>Bottom test!</h1>
+    <div id="Get">
+        <h1>GET USERS:</h1>
+        <div id="GetComponent">
+            @await Component.InvokeAsync("UserComponent", 0)
+        </div>
+        <input type="button" id="updateButton" value="Update list" />
+    </div>
+    <div id="Post">
+        <h1>ADD USER:</h1>
+        Name: <input type="text" id="nameInput" />
+        <input type="button" id="addButton" value="Add user" />
+        <label id="sqlResult" ></label>
+    </div>
 </body>
 </html>
+<script src="~/js/sql.js"></script>

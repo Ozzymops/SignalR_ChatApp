@@ -15,11 +15,11 @@ namespace SignalR_ChatApp.Models
         private Logger l = new Logger();
 
         #region CREATE
-        public bool AddUser(User user)
+        public SqlResult AddUser(User user)
         {
-            bool returnValue = false;
+            SqlResult result = new SqlResult();
 
-            string query = "INSERT INTO [User] SELECT '@Name', @MsgCount;";
+            string query = "INSERT INTO [User] SELECT @Name, @MsgCount;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -34,13 +34,14 @@ namespace SignalR_ChatApp.Models
                     connection.Open();
                     Int32 rowsAffected = command.ExecuteNonQuery();
                     l.Write("AddUser Rows affected: " + rowsAffected.ToString());
-                    returnValue = true;
-                    return returnValue;
+                    result.Status = "Success, user " + user.Name + " successfully added to the database.";
+                    result.Rows = rowsAffected;
+                    return result;
                 }
                 catch (Exception e)
                 {
                     l.Write(e);
-                    return returnValue;
+                    return null;
                 }
             }
         }
