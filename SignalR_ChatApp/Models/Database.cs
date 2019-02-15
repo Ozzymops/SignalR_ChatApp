@@ -10,7 +10,8 @@ namespace SignalR_ChatApp.Models
     {
         // Verander 'localhost' naar uiteindelijke adres van de database!
         // Verander 'AnalyseDb' naar de finale database!
-        private string connectionString = "Data Source = localhost; Initial Catalog = AnalyseDb; Integrated Security = True";
+        // private string connectionString = "Data Source = localhost; Initial Catalog = AnalyseDb; Integrated Security = True";
+        private string connectionString = "Server = localhost; Database=AnalyseDb; User Id=ADMINMAN; Password=adminpass";
 
         private Logger l = new Logger();
 
