@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SignalR_ChatApp.Models
@@ -20,15 +21,20 @@ namespace SignalR_ChatApp.Models
         {
             SqlResult result = new SqlResult();
 
-            string query = "INSERT INTO [User] SELECT @Name, @MsgCount;";
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.Add("@Name", System.Data.SqlDbType.NVarChar);
-                command.Parameters.Add("@MsgCount", System.Data.SqlDbType.Int);
-                command.Parameters["@Name"].Value = user.Name;
-                command.Parameters["@MsgCount"].Value = user.MsgCount;
+                SqlCommand command = new SqlCommand("AddUser", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter("@pName", user.Name));
+                command.Parameters.Add(new SqlParameter("@pUsername", user.Username));
+                command.Parameters.Add(new SqlParameter("@pPassword", user.Password));
+                command.Parameters.Add(new SqlParameter("@pLastLogin", user.LastLogin));
+                var output = new SqlParameter("@responseMessage", System.Data.SqlDbType.NVarChar);
+                output.Direction = System.Data.ParameterDirection.Output;
+                output.Size = 250;
+                command.Parameters.Add(output);
+                
 
                 try
                 {
@@ -67,12 +73,24 @@ namespace SignalR_ChatApp.Models
                     {
                         while (reader.Read())
                         {
-                            userList.Add(new User
+                            User tempUser = new User()
                             {
                                 Id = (int)reader["Id"],
                                 Name = reader["Name"].ToString(),
-                                MsgCount = (int)reader["MsgCount"]
-                            });
+                                MsgCount = (int)reader["MsgCount"],
+                                Username = reader["Username"].ToString(),
+                                Password = "encrypted :^)",
+                                Salt = reader["Salt"].ToString(),
+                                Attempts = (int)reader["Attempts"]
+                            };
+
+                            if (reader["LastLogin"] != null)
+                            {
+                                DateTime tempDate = (DateTime)reader["LastLogin"];
+                                tempUser.LastLogin = tempDate.Date.ToShortDateString();
+                            }
+
+                            userList.Add(tempUser);
                         }
                     }
 

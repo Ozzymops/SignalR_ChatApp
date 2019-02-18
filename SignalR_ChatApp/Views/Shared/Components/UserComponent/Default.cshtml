@@ -5,6 +5,11 @@
         <th>Id</th>
         <th>Name</th>
         <th>MsgCount</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Salt</th>
+        <th>LastLogin</th>
+        <th>Attempts</th>
     </tr>
     @foreach (var user in Model)
     {
@@ -12,6 +17,11 @@
             <td>@user.Id</td>
             <td>@user.Name</td>
             <td>@user.MsgCount</td>
+            <td>@user.Username</td>
+            <td>@user.Password</td>
+            <td>@user.Salt</td>
+            <td>@user.LastLogin</td>
+            <td>@user.Attempts</td>
         </tr>
     }
 </table>

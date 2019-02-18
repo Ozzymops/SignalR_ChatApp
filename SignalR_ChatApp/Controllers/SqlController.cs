@@ -14,10 +14,10 @@ namespace SignalR_ChatApp.Controllers
         }
 
         [Route("Sql/SaveUser")]
-        public ActionResult SaveUser(string name)
+        public ActionResult SaveUser(string name, string username, string password)
         {
             Models.Database db = new Models.Database();
-            return Content(db.AddUser(new Models.User { Name = name }).Status);
+            return Content(db.AddUser(new Models.User { Name = name, MsgCount = 0, Username = username, Password = password, LastLogin = DateTime.Today.Date.ToString("yyyy-MM-dd"), Attempts = 0 }).Status);
         }
     }
 }
