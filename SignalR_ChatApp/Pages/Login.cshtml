@@ -1,24 +1,18 @@
-﻿@page
-@model SignalR_ChatApp.Pages.LoginModel
-@{
-    Layout = null;
-}
+﻿@model LoginModel
 
-@using System.Security.Claims
-
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Login</title>
-    </head>
-    <body>
-        <div>
-            @DateTime.Now
-        </div>
-        <div>
-            @User.GetU
-        </div>
-    </body>
-</html>
+<form method="post" asp-action="Login" asp-controller="Account">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="Username"></label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username"></span>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <input type="submit" value="Login" />
+    </div>
+</form>
